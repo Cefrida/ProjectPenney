@@ -2,7 +2,9 @@ from datagen import compute_win_draw_percentages, generate_sequences
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from helpers import debugger_factory
 
+@debugger_factory
 def create_heatmap(win_draw_percentages):
     """
     Creates a heatmap for Player 2 win percentages
