@@ -1,9 +1,9 @@
 import random
 from datagen import get_decks
-from src.helpers import PATH_DATA
+from src.helpers import PATH_DATA, debugger_factory
 from datagen import generate_sequences 
 
-
+@debugger_factory
 def simulate_game(deck, seq1, seq2):
     """
     Simulate a game where two players choose a sequence and the player who wins is the one with the most tricks.
@@ -30,6 +30,7 @@ def simulate_game(deck, seq1, seq2):
     else:
         return 'Draw'
 
+@debugger_factory
 def compute_win_draw_percentages(n_decks: int, n_simulations: int = 1000):
     """
     Compute the percentage of Player 2 wins and draws for all sequence matchups.
