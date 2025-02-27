@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.helpers import PATH_DATA
+from src.helpers import PATH_DATA, debugger_factory
 import random
 
 HALF_DECK_SIZE = 26
 
-
+@debugger_factory 
 def get_decks(n_decks: int,
               seed: int, 
               half_deck_size: int = HALF_DECK_SIZE 
