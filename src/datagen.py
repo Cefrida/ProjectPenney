@@ -15,7 +15,7 @@ def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> 
     for deck in decks:
         rng.shuffle(deck)  # In-place shuffle
     
-    return decks, np.random.get_state()  # Ensure the random state is returned for reproducibility
+    return decks, np.random.get_state()  # Ensure the random state is returned for reproducibilit
 
 
 
