@@ -1,7 +1,6 @@
 import random
-from datagen import get_decks
+from datagen import get_decks, generate_sequences
 from src.helpers import PATH_DATA, debugger_factory
-from datagen import generate_sequences 
 
 @debugger_factory
 def simulate_game(deck, seq1, seq2):
@@ -47,14 +46,15 @@ def compute_win_draw_percentages(n_decks: int, n_simulations: int = 1000):
             
             for _ in range(n_simulations):
                 seed = random.randint(0, 10000)
-                deck = get_decks(n_decks, seed)
-                outcome = simulate_game(deck, seq1, seq2)
+                decks, _ = get_decks(n_decks, seed)  # Ensure unpacking the decks correctly
+                outcome = simulate_game(decks, seq1, seq2)
                 
                 if outcome == 'Player 2 wins':
                     p2_wins += 1
                 elif outcome == 'Draw':
                     draws += 1
             
+            # Calculate percentages
             results[seq1]['Player 2 Wins'][seq2] = p2_wins / n_simulations * 100
             results[seq1]['Draws'][seq2] = draws / n_simulations * 100
     
