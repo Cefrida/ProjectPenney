@@ -1,7 +1,7 @@
 import os
 import json
 import sys
-from src.processing import compute_win_draw_percentages  # Updated import
+from processing import compute_win_draw_percentages  # Updated import
 from visualization import create_heatmap
 
 def main():
