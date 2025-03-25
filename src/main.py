@@ -1,6 +1,7 @@
 import os
 import json
-from datagen import compute_win_draw_percentages
+import sys
+from src.processing import compute_win_draw_percentages  # Updated import
 from visualization import create_heatmap
 
 def main():
@@ -23,6 +24,8 @@ def main():
 
     # You might want to save the results as a file for future reference
     results_file = os.path.join('data', "results.json")
+    if not os.path.exists('data'):
+        os.makedirs('data')  # Ensure the directory exists
     with open(results_file, 'w') as f:
         json.dump(win_draw_percentages, f)
     
