@@ -5,7 +5,7 @@ import random
 
 HALF_DECK_SIZE = 26
 
-@debugger_factory 
+@debugger_factory
 def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> tuple[np.ndarray, np.ndarray]:
     """
     Efficiently generate `n_decks` shuffled decks using NumPy.
@@ -14,7 +14,7 @@ def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> 
         decks (np.ndarray): 2D array of shape (n_decks, num_cards), 
         each row is a shuffled deck.
     """
-    init_deck = [0]*half_deck_size + [1]*half_deck_size
+    init_deck = [0] * half_deck_size + [1] * half_deck_size
     decks = np.tile(init_deck, (n_decks, 1))
     rng = np.random.default_rng(seed)
     
@@ -46,15 +46,14 @@ class DeckStorage:
         self._save_decks(seed, new_decks)
 
     def get_decks(self, seed: int):
-    """
-    Get the decks associated with a specific seed from memory.
-    """
-    decks = self.decks.get(seed, None)
-    if decks is None:
-        print(f"No decks found for seed {seed}.")
-    return decks
+        """
+        Get the decks associated with a specific seed from memory.
+        """
+        decks = self.decks.get(seed, None)
+        if decks is None:
+            print(f"No decks found for seed {seed}.")
+        return decks
 
-    
     def get_all_decks(self):
         """
         Retrieve all stored decks from memory.
