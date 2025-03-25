@@ -1,7 +1,7 @@
 import os
 import json
-from datagen import compute_win_draw_percentages
-from visualization import create_heatmap
+from src.datagen import compute_win_draw_percentages
+from src.visualization import create_heatmap
 
 def main():
     # Ask the user for the number of decks and seed
