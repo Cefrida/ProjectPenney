@@ -1,9 +1,3 @@
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from src.datagen import compute_win_draw_percentages, generate_sequences
-from src.helpers import debugger_factory
-
 @debugger_factory
 def create_heatmap(win_draw_percentages):
     """
@@ -36,5 +30,13 @@ def create_heatmap(win_draw_percentages):
     plt.title(f"My Chance of Winning by Sequence Pair (n=1000)")
     plt.xlabel("My Opponent's Sequence Choice")
     plt.ylabel("My Sequence Choice")
-    plt.show()
+    
+    # Save the heatmap image to the 'figures' folder
+    if not os.path.exists('figures'):
+        os.makedirs('figures')  # Create 'figures' folder if it doesn't exist
+    
+    heatmap_filename = os.path.join('figures', 'win_heatmap.png')
+    plt.savefig(heatmap_filename)
+    plt.close()  # Close the figure to avoid overlapping on multiple runs
 
+    print(f"Heatmap saved to {heatmap_filename}")
