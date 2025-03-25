@@ -1,55 +1,84 @@
-
-
+#datagen
 import numpy as np
 import os
-import json
+from helpers import PATH_DATA, debugger_factory
+import random
 
 HALF_DECK_SIZE = 26
-DECK_SIZE = HALF_DECK_SIZE * 2
-N_DECKS = 250000
 
-class Decking:
-    def __init__(self, seed: int = 9903):
-        self.seed = seed
-        self.rng = np.random.default_rng(self.seed)
-        self.rounds = 0
-        self.storage_dir = os.path.join(os.getcwd(), "files")  # Store files in "files/"
-        os.makedirs(self.storage_dir, exist_ok=True)  # Ensure "files" folder exists
+@debugger_factory
+def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> tuple[np.ndarray, np.ndarray]:
+    # Generate shuffled decks
+    init_deck = [0] * half_deck_size + [1] * half_deck_size
+    decks = np.tile(init_deck, (n_decks, 1))  # Shape (n_decks, 52)
+    rng = np.random.default_rng(seed)
+    
+    for deck in decks:
+        rng.shuffle(deck)  # In-place shuffle
+    
+    return decks, np.random.get_state()  # Ensure the random state is returned for reproducibilit
 
-    def gen_decks(self, n_decks: int, half_deck_size: int = HALF_DECK_SIZE):
+
+
+class DeckStorage:
+    def __init__(self, storage_dir=PATH_DATA):
+        self.decks = {}
+        self.storage_dir = storage_dir
+        if not os.path.exists(storage_dir):
+            os.makedirs(storage_dir)
+
+    def add_decks(self, n_decks: int, seed: int):
         """
-        Generates and stores decks of cards along with their seeds.
-
-        Args:
-            n_decks (int): Number of decks to generate.
-            half_deck_size (int): Number of cards in each half-deck.
-
-        Returns:
-            np.ndarray: Array of shuffled decks.
+        Add new decks to the storage while keeping the old ones.
+        Ensures reproducibility by storing decks with their corresponding seed.
         """
-        init_deck = [0] * half_deck_size + [1] * half_deck_size  # Two halves: 0 and 1
-        decks = np.tile(init_deck, (n_decks, 1))  # Create n_decks of identical size
-        self.rng.permuted(decks, axis=1, out=decks)  # Shuffle each deck
+        # Generate new decks
+        new_decks = get_decks(n_decks, seed)
+        
+        # Store the decks using the seed as the key
+        self.decks[seed] = new_decks
+        
+        # Save to file
+        self._save_decks(seed, new_decks)
 
-        # Paths to store deck data and state
-        deck_storage_path = os.path.join(self.storage_dir, "deck_storage.npy")
-        state_file_path = os.path.join(self.storage_dir, "state.json")
-
-        # Start fresh if it's the first round or a fresh deck generation
-        if self.rounds == 0 and os.path.exists(deck_storage_path):
-            os.remove(deck_storage_path)
-
-        if os.path.exists(deck_storage_path):
-            existing_decks = np.load(deck_storage_path)
-            decks = np.vstack((existing_decks, decks))  # Append new decks to existing
-
-        np.save(deck_storage_path, decks)  # Save updated decks
-
-        # Save the current state of the RNG for reproducibility
-        state = self.rng.bit_generator.state
-        with open(state_file_path, 'w') as f:
-            json.dump(state, f)
-
-        self.rounds += 1
+    def get_decks(self, seed: int):
+        """
+        Get the decks associated with a specific seed from memory.
+        """
+        decks = self.decks.get(seed, None)
+        if decks is None:
+            print(f"No decks found for seed {seed}.")
         return decks
 
+    def get_all_decks(self):
+        """
+        Retrieve all stored decks from memory.
+        """
+        return self.decks
+    
+    def _save_decks(self, seed: int, decks: np.ndarray):
+        """
+        Save the decks to a .npy file for persistence. This allows for reproducibility.
+        """
+        filename = os.path.join(self.storage_dir, f'decks_{seed}.npy')
+        np.save(filename, decks)
+        print(f"Decks saved with seed {seed} to {filename}")
+    
+    def load_decks(self, seed: int):
+        """
+        Load decks from a .npy file using the seed.
+        """
+        filename = os.path.join(self.storage_dir, f'decks_{seed}.npy')
+        if os.path.exists(filename):
+            return np.load(filename)
+        else:
+            print(f"Decks with seed {seed} not found.")
+            return None
+
+def generate_sequences():
+    """
+    Generate all possible sequences of 3 binary cards and convert them to 'R' and 'B' labels.
+    """
+    binary_sequences = ['{:03b}'.format(i) for i in range(8)]
+    rb_sequences = [seq.replace('0', 'B').replace('1', 'R') for seq in binary_sequences]
+    return rb_sequences
