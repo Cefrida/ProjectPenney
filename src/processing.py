@@ -11,24 +11,25 @@ def simulate_game(deck, seq1, seq2):
     p1_tricks, p2_tricks = 0, 0
     current_sequence = []
     
-    for card in deck[0]:
-        
+    for card in deck:  # Loop through each card in the deck
+        current_sequence.append(card)
         if len(current_sequence) > 3:
-            current_sequence.pop(0)
-        
+            current_sequence.pop(0)  # Remove the oldest card when there are more than 3 cards
+
         if ''.join(current_sequence) == seq1:
             p1_tricks += 1
-            current_sequence = []
+            current_sequence = []  # Reset sequence
         elif ''.join(current_sequence) == seq2:
             p2_tricks += 1
-            current_sequence = []
-    
+            current_sequence = []  # Reset sequence
+
     if p1_tricks > p2_tricks:
         return 'Player 1 wins'
     elif p2_tricks > p1_tricks:
         return 'Player 2 wins'
     else:
         return 'Draw'
+
 
 @debugger_factory
 def compute_win_draw_percentages(n_decks: int, n_simulations: int = 1000):
