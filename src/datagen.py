@@ -7,21 +7,16 @@ HALF_DECK_SIZE = 26
 
 @debugger_factory
 def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> tuple[np.ndarray, np.ndarray]:
-    """
-    Efficiently generate `n_decks` shuffled decks using NumPy.
-    
-    Returns:
-        decks (np.ndarray): 2D array of shape (n_decks, num_cards), 
-        each row is a shuffled deck.
-    """
+    # Generate shuffled decks
     init_deck = [0] * half_deck_size + [1] * half_deck_size
-    decks = np.tile(init_deck, (n_decks, 1))
+    decks = np.tile(init_deck, (n_decks, 1))  # Shape (n_decks, 52)
     rng = np.random.default_rng(seed)
     
     for deck in decks:
         rng.shuffle(deck)  # In-place shuffle
-        
-    return decks
+    
+    return decks, np.random.get_state()  # Ensure the random state is returned for reproducibility
+
 
 
 class DeckStorage:
