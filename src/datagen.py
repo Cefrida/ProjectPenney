@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.helpers import PATH_DATA, debugger_factory
+from helpers import PATH_DATA, debugger_factory
 import random
 
 HALF_DECK_SIZE = 26
