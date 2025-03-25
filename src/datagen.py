@@ -17,8 +17,12 @@ def get_decks(n_decks: int, seed: int, half_deck_size: int = HALF_DECK_SIZE) -> 
     init_deck = [0]*half_deck_size + [1]*half_deck_size
     decks = np.tile(init_deck, (n_decks, 1))
     rng = np.random.default_rng(seed)
-    rng.permuted(decks, axis=1, out=decks)
+    
+    for deck in decks:
+        rng.shuffle(deck)  # In-place shuffle
+        
     return decks
+
 
 class DeckStorage:
     def __init__(self, storage_dir=PATH_DATA):
@@ -42,10 +46,14 @@ class DeckStorage:
         self._save_decks(seed, new_decks)
 
     def get_decks(self, seed: int):
-        """
-        Get the decks associated with a specific seed from memory.
-        """
-        return self.decks.get(seed, None)
+    """
+    Get the decks associated with a specific seed from memory.
+    """
+    decks = self.decks.get(seed, None)
+    if decks is None:
+        print(f"No decks found for seed {seed}.")
+    return decks
+
     
     def get_all_decks(self):
         """
