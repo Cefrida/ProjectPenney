@@ -1,8 +1,8 @@
 import os
 import json
 import sys
-from processing import compute_win_draw_percentages  # Updated import
-from visualization import create_heatmap
+from src.processing import compute_win_draw_percentages  # Updated import
+from src.visualization import create_heatmap
 
 def main():
     # Set default values for number of decks and seed
