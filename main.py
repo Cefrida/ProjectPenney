@@ -1,21 +1,17 @@
 import os
 import json
-import sys
-from src.processing import compute_win_draw_percentages  # Updated import
-from src.visualization import create_heatmap
+from datagen import compute_win_draw_percentages
+from visualization import create_heatmap
 
 def main():
-    # Set default values for number of decks and seed
-    n_decks = 1000
-    seed = 42
-
-    # If arguments are passed via the command line, use them
-    if len(sys.argv) > 1:
-        try:
-            n_decks = int(sys.argv[1])  # First argument for number of decks
-            seed = int(sys.argv[2])     # Second argument for seed
-        except ValueError:
-            print("Invalid arguments. Using default values.")
+    # Ask the user for the number of decks and seed
+    try:
+        n_decks = int(input("Enter the number of decks: "))  # Get user input for number of decks
+        seed = int(input("Enter the seed value: "))  # Get user input for seed
+    except ValueError:
+        print("Invalid input. Using default values.")
+        n_decks = 1000  # Default value for number of decks
+        seed = 42  # Default value for seed
 
     print(f"Generating {n_decks} decks with seed {seed}...")
 
@@ -24,8 +20,6 @@ def main():
 
     # You might want to save the results as a file for future reference
     results_file = os.path.join('data', "results.json")
-    if not os.path.exists('data'):
-        os.makedirs('data')  # Ensure the directory exists
     with open(results_file, 'w') as f:
         json.dump(win_draw_percentages, f)
     
