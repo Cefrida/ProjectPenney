@@ -1,8 +1,8 @@
-from datagen import compute_win_draw_percentages, generate_sequences
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from helpers import debugger_factory
+from src.datagen import compute_win_draw_percentages, generate_sequences
+from src.helpers import debugger_factory
 
 @debugger_factory
 def create_heatmap(win_draw_percentages):
@@ -38,8 +38,3 @@ def create_heatmap(win_draw_percentages):
     plt.ylabel("My Sequence Choice")
     plt.show()
 
-# Run analysis
-win_draw_percentages = compute_win_draw_percentages(n_decks=100, n_simulations=1000)
-
-# Create and display the heatmap for win percentages
-create_heatmap(win_draw_percentages)
