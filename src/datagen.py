@@ -1,7 +1,7 @@
 #datagen
 import numpy as np
 import os
-from helpers import PATH_DATA, debugger_factory
+from src.helpers import PATH_DATA, debugger_factory
 import random
 
 HALF_DECK_SIZE = 26
