@@ -1,5 +1,5 @@
 import random
-from datagen import get_decks, generate_sequences
+from src.datagen import get_decks, generate_sequences
 from src.helpers import PATH_DATA, debugger_factory
 
 @debugger_factory
