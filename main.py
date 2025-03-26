@@ -1,6 +1,6 @@
 import os
 import json
-from src.datagen import compute_win_draw_percentages
+from src.processing import compute_win_draw_percentages
 from src.visualization import create_heatmap
 import numpy as np
 
