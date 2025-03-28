@@ -4,7 +4,7 @@
 
 ProjectPenney is a data generation and visualization tool designed to simulate Penney's Game, a probability-based game involving binary sequences (Red/Black). The game is played between two players and revolves around the occurrence of specific three-sequence combinations in a randomly generated sequence.
 
-How the Game Works:
+## How the Game Works:
 1. Player 1's Choice: Player 1 selects a three-sequence combination of Red (R) and Black (B). For example, they may choose "RRB".
 
 2. Player 2's Choice: Player 2 then selects a different three-sequence combination, such as "RBB".
@@ -17,11 +17,11 @@ How the Game Works:
 
 6. Statistical Analysis: Over multiple simulated rounds, the game evaluates the percentage chance of Player 2 winning based on Player 1's selection.
    
-Tricks 
+## Tricks 
    - A trick is won when a players sequence appears in the shuffled deck
    - Each trick is worth 1 point
 
-Cards
+## Cards
    - Cards are awarded when a player's sequence matches the generated sequence, winning a trick.
    - The minimum number of cards won is three, corresponding to the length of the sequence. The count of won cards starts from the first card after the previous trick and extends to the       last card of the newly matched trick.
 
