@@ -1,45 +1,37 @@
 import os
 import json
 from src.processing import compute_win_draw_percentages
-from src.visualization import create_heatmap
+from src.visualization import create_heatmap_tricks, create_heatmap_cards
 import numpy as np
+from src.datagen import DeckStorage
 
-def convert_to_serializable(obj):
+def convert(obj: np.ndarray) -> list:
     """
-    Convert non-serializable objects (like numpy arrays) into a serializable format.
+    Convert numpy arrays to lists.
     """
     if isinstance(obj, np.ndarray):
-        return obj.tolist()  # Convert numpy arrays to lists
+        return obj.tolist()
     return obj
 
-def main():
-    # Ask the user for the number of decks and seed
-    try:
-        n_decks = int(input("Enter the number of decks: "))  # Get user input for number of decks
-        seed = int(input("Enter the seed value: "))  # Get user input for seed
-    except ValueError:
-        print("Invalid input. Using default values.")
-        n_decks = 1000  # Default value for number of decks
-        seed = 42  # Default value for seed
+def main() -> None:
+    n_decks: int = 1000000
+    n_simulations: int = 1
 
-    print(f"Generating {n_decks} decks with seed {seed}...")
+    formatted_results: dict = compute_win_draw_percentages(n_decks, n_simulations)
 
-    # Compute win and draw percentages for all sequence matchups
-    win_draw_percentages = compute_win_draw_percentages(n_decks=n_decks, n_simulations=1000)
-
-    # Ensure 'data' directory exists
     if not os.path.exists('data'):
         os.makedirs('data')
 
-    # Save results to JSON file
-    results_file = os.path.join('data', "results.json")
+    results_file: str = os.path.join('data', "results.json")
     with open(results_file, 'w') as f:
-        json.dump(win_draw_percentages, f, default=convert_to_serializable)
-    
-    # Visualize results (create heatmap)
-    create_heatmap(win_draw_percentages)
+        json.dump(formatted_results, f, default=convert)
 
-    print("Simulation complete and visualized successfully.")
+    # Save heatmap for Tricks
+    create_heatmap_tricks(formatted_results, n_decks)
+
+    create_heatmap_cards(formatted_results, n_decks)
+    print("Simulation complete, results saved, and heatmaps visualized successfully.")
+    print("Heatmaps saved in the 'saved_heatmaps' folder.")
 
 if __name__ == "__main__":
     main()
