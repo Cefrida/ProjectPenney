@@ -42,9 +42,9 @@ You will find all of the files you will be using in the src/ folder. Inside this
    - results.json : contains the percentage results 
    
    
-## Quick Start Guide
+# Quick Start Guide
 
-# Run the script in a terminal 
+### Run the script in a terminal 
 
 python3 main.py
 
