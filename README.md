@@ -35,7 +35,7 @@ You will find all of the files you will be using in the src/ folder. Inside this
    - helpers.py : Contains debugging tools.
    - processing.py : Simulates games and calculates percentages.
    - visualization.py : Creates heatmap using Player 2 win percentages.
-   - heatmap_player2.png: Final saved heatmap for n=10,000
+   - heatmap_player2.png: Final saved heatmap for n=1000000
 
 /data : stores the shuffled decks in .npy files
    - seeds.json : stores the seeds for reproducability
