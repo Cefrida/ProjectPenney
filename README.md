@@ -2,8 +2,21 @@
 
 # Overview
 
-ProjectPenney is a data generation and visualization tool designed to simulate "Penney's Game".  This game is a binary (Red/Black) sequence generating game between two players. One player selects a 3 sequence combination of red and black, then the other player chooses a different sequence. This code is used to simulate this game by analyzing the percentage chance of Player 2 winning given player 1's chosen sequence. The output is a heatmap visualization showing the likelihood of Player 2 winning, in percentages both by tricks and cards. 
+ProjectPenney is a data generation and visualization tool designed to simulate Penney's Game, a probability-based game involving binary sequences (Red/Black). The game is played between two players and revolves around the occurrence of specific three-sequence combinations in a randomly generated sequence.
 
+How the Game Works:
+1. Player 1's Choice: Player 1 selects a three-sequence combination of Red (R) and Black (B). For example, they may choose "RRB".
+
+2. Player 2's Choice: Player 2 then selects a different three-sequence combination, such as "RBB".
+
+3. Sequence Generation: A long random binary sequence of Red and Black is generated (a deck).
+
+4. Trick : The game progresses by checking which player's chosen sequence appears first in the generated sequence. The player whose sequence appears first wins the "trick".
+
+5. The table is then cleared and the cards are collected by the trick winner. The game continues until the deck runs out.
+
+6. Statistical Analysis: Over multiple simulated rounds, the game evaluates the percentage chance of Player 2 winning based on Player 1's selection.
+   
 Tricks 
    - A trick is won when a players sequence appears in the shuffled deck
    - Each trick is worth 1 point
